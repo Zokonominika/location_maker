@@ -1,0 +1,64 @@
+#:kivy 2.3.0
+FloatLayout:
+    canvas.before:
+        # Background Color (Dark Charcoal / Emerald tone)
+        Color:
+            rgba: 0.1, 0.12, 0.11, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    # Compass Title
+    Label:
+        text: "Kıble Gösterici\n(İstanbul: 153°)"
+        halign: 'center'
+        font_size: '24sp'
+        bold: True
+        color: 0.9, 0.75, 0.2, 1 # Gold color
+        size_hint_y: None
+        height: self.texture_size[1]
+        pos_hint: {'center_x': 0.5, 'top': 0.9}
+
+    # The spinning compass dial (representing North)
+    RelativeLayout:
+        size_hint: None, None
+        size: min(root.width, root.height) * 0.8, min(root.width, root.height) * 0.8
+        pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+
+        # Background Dial
+        Scatter:
+            do_rotation: False
+            do_scale: False
+            do_translation: False
+            size_hint: 1, 1
+            # In Kivy, positive rotation is counter-clockwise.
+            rotation: app.compass_angle
+            
+            Image:
+                source: 'assets/dial.png'
+                allow_stretch: True
+                keep_ratio: True
+                size: self.parent.size
+
+        # Needle pointing to Qibla
+        Scatter:
+            do_rotation: False
+            do_scale: False
+            do_translation: False
+            size_hint: 1, 1
+            # Qibla is 153 degrees clockwise from North. 
+            rotation: app.compass_angle - app.qibla_angle
+            
+            Image:
+                source: 'assets/needle.png'
+                allow_stretch: True
+                keep_ratio: True
+                size: self.parent.size
+                
+    Label:
+        text: "Pusula kalibrasyonu için\ntelefonunuzla '8' çizin."
+        halign: 'center'
+        font_size: '14sp'
+        color: 0.6, 0.6, 0.6, 1
+        size_hint_y: None
+        pos_hint: {'center_x': 0.5, 'y': 0.1}

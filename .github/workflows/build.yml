@@ -1,0 +1,35 @@
+name: Build Kivy App (APK)
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      # Cache Buildozer global directory to speed up subsequent builds
+      - name: Cache Buildozer global directory
+        uses: actions/cache@v4
+        with:
+          path: .buildozer_global
+          key: buildozer-global-${{ hashFiles('buildozer.spec') }}
+
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        id: buildozer
+        with:
+          command: buildozer android debug
+          buildozer_version: master
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kiblegosterici-kible-app
+          path: ${{ steps.buildozer.outputs.filename }}
