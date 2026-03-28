@@ -40,7 +40,7 @@ jobs:
 
       - name: Build with Buildozer
         run: |
-          yes | ~/.local/bin/buildozer -v android debug
+          ~/.local/bin/buildozer -v android debug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4

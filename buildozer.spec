@@ -59,6 +59,9 @@ android.permissions = INTERNET
 # (int) Target Android API, should be as high as possible.
 android.api = 33
 
+# (bool) Automatically accept SDK license agreements.
+android.accept_sdk_license = True
+
 # (int) Minimum API your APK / AAB will support.
 android.minapi = 21
 
